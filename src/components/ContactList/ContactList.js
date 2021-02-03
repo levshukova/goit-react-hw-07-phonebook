@@ -1,6 +1,7 @@
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getFilteredContacts } from '../../redux/selectors';
-import actions from '../../redux/actions';
+import operations from '../../redux/operations';
 
 import s from './ContactList.module.css';
 
@@ -8,7 +9,9 @@ function ContactList() {
   const contacts = useSelector(getFilteredContacts);
   const dispatch = useDispatch();
 
-  const onDeleteContact = id => dispatch(actions.deleteContact(id));
+  useEffect(() => dispatch(operations.fetchContacts()), [dispatch]);
+
+  const onDeleteContact = id => dispatch(operations.deleteContact(id));
 
   return (
     <ul className={s.list}>
